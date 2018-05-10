@@ -29,10 +29,24 @@ endif
 
 scriptencoding utf-8
 
-hi default link BufTabLineCurrent TabLineSel
-hi default link BufTabLineActive  PmenuSel
-hi default link BufTabLineHidden  TabLine
-hi default link BufTabLineFill    TabLineFill
+if !exists('g:BufTablineList')
+    let g:BufTablineList = []
+endif
+
+if !exists('g:buftabline_excludes')
+    let g:buftabline_excludes = []
+endif
+
+" hi default link BufTabLineCurrent TabLineSel
+" hi default link BufTabLineActive  PmenuSel
+" hi default link BufTabLineHidden  TabLine
+" hi default link BufTabLineFill    TabLineFill
+
+hi BufTabLineCurrent ctermfg=22 ctermbg=148 guifg=#005f00 guibg=#afd700
+hi BufTabLineActive  ctermfg=232 ctermbg=8 guifg=#080808 guibg=Grey50
+hi BufTabLineHidden  ctermfg=247 ctermbg=233 guifg=#9e9e9e guibg=#121212
+hi BufTabLineFill    ctermfg=247 ctermbg=233 guifg=#9e9e9e guibg=#121212
+" hi BufTabLineFill ctermfg=231 ctermbg=233 guifg=#ffffff guibg=#121212
 
 let g:buftabline_numbers    = get(g:, 'buftabline_numbers',    0)
 let g:buftabline_indicators = get(g:, 'buftabline_indicators', 0)
@@ -41,7 +55,12 @@ let g:buftabline_show       = get(g:, 'buftabline_show',       2)
 let g:buftabline_plug_max   = get(g:, 'buftabline_plug_max',  10)
 
 function! buftabline#user_buffers() " help buffers are always unlisted, but quickfix buffers are not
-	return filter(range(1,bufnr('$')),'buflisted(v:val) && "quickfix" !=? getbufvar(v:val, "&buftype")')
+	" return filter(range(1,bufnr('$')),'buflisted(v:val) && "quickfix" !=? getbufvar(v:val, "&buftype")')
+    let g:BufTablineList = filter(range(1,bufnr('$')),'buflisted(v:val) && "quickfix" !=? getbufvar(v:val, "&buftype")')
+    for name_exclude in g:buftabline_excludes
+        let g:BufTablineList = filter(g:BufTablineList,'bufname(v:val) !=? name_exclude')
+    endfor
+    return g:BufTablineList
 endfunction
 
 let s:dirsep = fnamemodify(getcwd(),':p')[-1:]
