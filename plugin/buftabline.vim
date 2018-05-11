@@ -215,3 +215,4 @@ if v:version < 703
 	exe "delfunction buftabline#render\n" . s:transpile()
 	delfunction s:transpile
 endif
+
