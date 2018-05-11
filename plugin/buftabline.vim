@@ -192,11 +192,13 @@ autocmd BufAdd    * call buftabline#update(0)
 autocmd BufDelete * call buftabline#update(str2nr(expand('<abuf>')))
 augroup END
 
-for s:n in range(1, g:buftabline_plug_max) + ( g:buftabline_plug_max > 0 ? [-1] : [] )
-	let s:b = s:n == -1 ? -1 : s:n - 1
-	execute printf("noremap <silent> <Plug>BufTabLine.Go(%d) :<C-U>exe 'b'.get(buftabline#user_buffers(),%d,'')<cr>", s:n, s:b)
+for s:count in range(1, g:buftabline_plug_max) + ( g:buftabline_plug_max > 0 ? [-1] : [] )
+    let s:index = s:count == -1 ? (-1) : (s:count - 1)
+    if g:buftabline_numbers == 2
+        exe printf("noremap <silent> <Plug>BufTabLine.Go(%d) :<C-U>exe 'b'.get(buftabline#user_buffers(),%d,'')<cr>", s:count, s:index)
+    endif
 endfor
-unlet! s:n s:b
+unlet! s:count s:index
 
 if v:version < 703
 	function s:transpile()
