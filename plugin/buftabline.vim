@@ -46,6 +46,7 @@ hi BufTabLineCurrent ctermfg=22 ctermbg=148 guifg=#005f00 guibg=#afd700
 hi BufTabLineActive  ctermfg=232 ctermbg=8 guifg=#080808 guibg=Grey50
 hi BufTabLineHidden  ctermfg=247 ctermbg=233 guifg=#9e9e9e guibg=#121212
 hi BufTabLineFill    ctermfg=247 ctermbg=233 guifg=#9e9e9e guibg=#121212
+
 " hi BufTabLineFill ctermfg=231 ctermbg=233 guifg=#ffffff guibg=#121212
 
 let g:buftabline_numbers    = get(g:, 'buftabline_numbers',    0)
