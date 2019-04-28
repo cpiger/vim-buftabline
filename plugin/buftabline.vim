@@ -216,3 +216,28 @@ if v:version < 703
 	delfunction s:transpile
 endif
 
+function! buftabline#buffernext()
+
+    let bn_cur  = bufnr('%')
+    let idx_cur = index(g:BufTablineList, bn_cur)
+    if  g:BufTablineList[-1] == g:BufTablineList[idx_cur]
+        let bn_next_idx  = 0 
+    else
+        let bn_next_idx  = idx_cur + 1 
+    endif
+    exec "normal " .g:BufTablineList[bn_next_idx]. "\<C-^>"
+endfunction
+
+function! buftabline#bufferprev()
+    let bn_cur  = bufnr('%')
+    let idx_cur = index(g:BufTablineList, bn_cur)
+    if  g:BufTablineList[0] == g:BufTablineList[idx_cur]
+        let bn_prev_idx  = -1 
+    else
+        let bn_prev_idx  = idx_cur - 1 
+    endif
+    exec "normal " .g:BufTablineList[bn_prev_idx]. "\<C-^>"
+endfunction
+command! BuftablineNext call buftabline#buffernext()
+command! BuftablinePrev call buftabline#bufferprev()
+
